@@ -23,25 +23,25 @@ The example we use below is watching for any newly created records to the databa
 */
 
 exports.sendNotifications = functions
-.region(region)
-.database
-.ref('notifications/{notiUid}')
-.onCreate((snap, context) => {
+    .region(region)
+    .database
+    .ref('notifications/{notiUid}')
+    .onCreate((snap, context) => {
 
-    const msg = snap.val();
-  
-    //uncomment below lines to see values in the Function logs
-    //console.log('id', context.params.notiUid);
-    //console.log('message', msg);
+        const msg = snap.val();
 
-    let payload = {
-        notification: {
-            title:  msg.title,
-            body:   msg.message,
-            sound:  "default",
-            badge:  "1"
-        }
-    };
+        //uncomment below lines to see values in the Function logs
+        //console.log('id', context.params.notiUid);
+        //console.log('message', msg);
 
-    return admin.messaging().sendToTopic(topic,payload);
-});
+        let payload = {
+            notification: {
+                title: msg.title,
+                body: msg.message,
+                sound: "default",
+                badge: "1"
+            }
+        };
+
+        return admin.messaging().sendToTopic(topic, payload);
+    });
